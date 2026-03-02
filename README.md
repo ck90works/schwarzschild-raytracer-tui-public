@@ -13,6 +13,12 @@ All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit 
 
 ---
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ck90works/schwarzschild-raytracer-tui-public/refs/heads/main/demo/demo.gif">
+</div>
+
+---
+
 ## Features
 
 - **Physically accurate** — Exact Schwarzschild geodesic integration in spherical coordinates, not flat-space approximations
@@ -27,7 +33,7 @@ All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit 
 
 ## Prerequisites
 
-- **Rust** ≥ 1.85.0 (Edition 2024)
+- **Rust** ≥ 1.85.0 (Edition 2024) (I used Rust 1.93.1 to compile this project)
 - A terminal emulator with **true-color (24-bit RGB)** support
   - Windows Terminal, iTerm2, Alacritty, kitty, WezTerm, etc.
   - The classic `cmd.exe` does **not** support true color
@@ -134,11 +140,7 @@ The engine traces light rays backward from the camera by integrating the **null 
 | Metric | Count |
 |---|---|
 | **Functional code** | ~583 lines |
-| Comment lines | ~575 lines |
 | Test code | ~304 lines |
-| **Total** | **~1,654 lines** across 14 files |
-| Test count | 18 tests |
-
 
 ---
 
