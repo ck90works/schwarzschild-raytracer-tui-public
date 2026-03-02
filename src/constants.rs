@@ -95,14 +95,6 @@ pub const TARGET_FPS: u64 = 60;
 pub const FRAME_DURATION_MS: u64 = 1000 / TARGET_FPS;
 
 // ---------------------------------------------------------------------------
-// § Luminance-to-Character Mapping
-// ---------------------------------------------------------------------------
-
-/// Characters ordered from darkest to brightest. Used to convert a
-/// floating-point luminance [0.0, 1.0] to an ASCII representation.
-pub const LUMINANCE_CHARS: &[char] = &[' ', '.', '·', ':', '*', '+', '#', '@'];
-
-// ---------------------------------------------------------------------------
 // § Color Palette — Centralized Style Tokens
 // ---------------------------------------------------------------------------
 

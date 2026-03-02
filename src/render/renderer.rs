@@ -102,14 +102,8 @@ fn shade(result: RayResult) -> Color {
                 COLOR_VOID
             }
         }
-        RayResult::Escaped(dir) => {
-            let (_, color) = celestial_background(dir);
-            color
-        }
-        RayResult::Disk(pos) => {
-            let (_, color) = accretion_disk_color(pos);
-            color
-        }
+        RayResult::Escaped(dir) => celestial_background(dir),
+        RayResult::Disk(pos) => accretion_disk_color(pos),
     }
 }
 

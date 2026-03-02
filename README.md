@@ -9,7 +9,7 @@ Light doesn't travel straight near a black hole. This engine traces every ray ba
 - **Accretion disk** — a glowing ring of matter with temperature-based coloring (white-hot inner edge → deep red outer edge)
 - **Einstein ring** — the bright ring of light visible when looking directly at the black hole
 
-All of this is rendered in **colored ASCII** using Unicode half-block characters for double vertical resolution, and parallelized across all CPU cores with [rayon](https://github.com/rayon-rs/rayon) for real-time frame rates.
+All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit RGB colors for double vertical resolution, and parallelized across all CPU cores with [rayon](https://github.com/rayon-rs/rayon) for real-time frame rates.
 
 ---
 
@@ -110,7 +110,7 @@ The Schwarzschild metric describes spacetime around a non-rotating, uncharged bl
 ds² = -(1 - r_s/r) c² dt² + (1 - r_s/r)⁻¹ dr² + r² (dθ² + sin²θ dφ²)
 ```
 
-The engine traces light rays backward from the camera by integrating the **geodesic equations** derived from this metric. Each ray's path is computed in spherical coordinates `(r, θ, φ)` using a 4th-order Runge-Kutta integrator with adaptive step sizing. A ray terminates when it either:
+The engine traces light rays backward from the camera by integrating the **null geodesic equation** derived from this metric. Each ray's path is computed in Cartesian coordinates using a 4th-order Runge-Kutta integrator with adaptive step sizing. The GR acceleration `a = -3/2 · r_s · h² / r⁵ · pos` (from the Binet orbit equation) curves each photon's trajectory. A ray terminates when it either:
 
 - **Escapes** — reaches r > 50 r_s → shaded from the celestial background
 - **Falls in** — crosses the event horizon (r ≤ r_s) → rendered as void
@@ -133,8 +133,11 @@ The engine traces light rays backward from the camera by integrating the **geode
 
 | Metric | Count |
 |---|---|
-| **Functional code** | ~594 lines |
+| **Functional code** | ~583 lines |
+| Comment lines | ~575 lines |
 | Test code | ~304 lines |
+| **Total** | **~1,654 lines** across 14 files |
+| Test count | 18 tests |
 
 
 ---

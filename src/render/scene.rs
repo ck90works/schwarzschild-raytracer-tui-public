@@ -18,7 +18,7 @@ use ratatui::style::Color;
 
 use crate::constants::{
     COLOR_DISK_COOL, COLOR_DISK_HOT, COLOR_DISK_MID, COLOR_GRID_PRIMARY, COLOR_GRID_SECONDARY,
-    COLOR_STAR, DISK_INNER_RADIUS, DISK_OUTER_RADIUS, LUMINANCE_CHARS,
+    COLOR_STAR, DISK_INNER_RADIUS, DISK_OUTER_RADIUS,
 };
 
 // ---------------------------------------------------------------------------
@@ -32,8 +32,8 @@ use crate::constants::{
 /// visible — the normally-straight grid lines will bend and warp around
 /// the black hole.
 ///
-/// Returns `(character, color)` for the terminal cell.
-pub fn celestial_background(dir: Vec3A) -> (char, Color) {
+/// Returns the color for this direction on the celestial sphere.
+pub fn celestial_background(dir: Vec3A) -> Color {
     // Convert direction to spherical coordinates (θ, φ).
     // θ = polar angle from +y axis, φ = azimuthal angle in xz-plane.
     let theta = dir.y.acos();
@@ -54,14 +54,11 @@ pub fn celestial_background(dir: Vec3A) -> (char, Color) {
     let is_star = hash % 47 == 0;
 
     if is_star {
-        // Bright star character.
-        ('·', COLOR_STAR)
+        COLOR_STAR
     } else if is_primary {
-        // Primary grid square — slightly brighter.
-        ('.', COLOR_GRID_PRIMARY)
+        COLOR_GRID_PRIMARY
     } else {
-        // Secondary grid square — darker.
-        (' ', COLOR_GRID_SECONDARY)
+        COLOR_GRID_SECONDARY
     }
 }
 
@@ -69,7 +66,7 @@ pub fn celestial_background(dir: Vec3A) -> (char, Color) {
 // § Accretion Disk Coloring
 // ---------------------------------------------------------------------------
 
-/// Computes the color and character for a point on the accretion disk.
+/// Computes the color for a point on the accretion disk.
 ///
 /// The disk radiates due to friction heating of infalling matter. Inner
 /// regions are hotter (whiter) and outer regions are cooler (redder).
@@ -79,8 +76,8 @@ pub fn celestial_background(dir: Vec3A) -> (char, Color) {
 /// * `pos` — The 3D position where the ray intersected the disk plane.
 ///
 /// # Returns
-/// `(character, foreground_color)` for the terminal cell.
-pub fn accretion_disk_color(pos: Vec3A) -> (char, Color) {
+/// The foreground color for this disk position.
+pub fn accretion_disk_color(pos: Vec3A) -> Color {
     // Compute the radial distance from the disk center (in the xz-plane).
     let r = (pos.x * pos.x + pos.z * pos.z).sqrt();
 
@@ -99,18 +96,10 @@ pub fn accretion_disk_color(pos: Vec3A) -> (char, Color) {
         lerp_color(COLOR_DISK_MID, COLOR_DISK_COOL, local_t)
     };
 
-    // Luminance decreases with distance from center (inverse-square-ish).
-    // Map to ASCII brightness character.
-    let luminance = 1.0 - t * 0.7; // inner = 1.0, outer = 0.3
-    let char_idx = (luminance * (LUMINANCE_CHARS.len() - 1) as f32) as usize;
-    let ch = LUMINANCE_CHARS[char_idx.min(LUMINANCE_CHARS.len() - 1)];
-
     // Add some radial "texture" — spiral structure in the disk.
     let angle = pos.z.atan2(pos.x);
     let spiral = ((angle * 3.0 + r * 0.5).sin() * 0.5 + 0.5).clamp(0.0, 1.0);
-    let textured_color = lerp_color(color, brighten(color, 0.3), spiral * 0.3);
-
-    (ch, textured_color)
+    lerp_color(color, brighten(color, 0.3), spiral * 0.3)
 }
 
 
@@ -159,9 +148,8 @@ mod tests {
     #[test]
     fn background_deterministic() {
         let dir = Vec3A::new(0.3, 0.5, 0.8).normalize();
-        let (c1, col1) = celestial_background(dir);
-        let (c2, col2) = celestial_background(dir);
-        assert_eq!(c1, c2);
+        let col1 = celestial_background(dir);
+        let col2 = celestial_background(dir);
         assert_eq!(col1, col2);
     }
 
@@ -171,8 +159,8 @@ mod tests {
         let inner = Vec3A::new(DISK_INNER_RADIUS + 0.1, 0.0, 0.0);
         let outer = Vec3A::new(DISK_OUTER_RADIUS - 0.1, 0.0, 0.0);
 
-        let (_, color_inner) = accretion_disk_color(inner);
-        let (_, color_outer) = accretion_disk_color(outer);
+        let color_inner = accretion_disk_color(inner);
+        let color_outer = accretion_disk_color(outer);
 
         // Extract red channel — inner should be brighter.
         let inner_r = match color_inner {

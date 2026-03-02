@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Schwarzschild Raytracer TUI is a real-time terminal-based black hole visualization engine written in Rust. It numerically integrates null geodesics (photon paths) through the Schwarzschild metric and renders the result as colored ASCII art in the terminal.
+The Schwarzschild Raytracer TUI is a real-time terminal-based black hole visualization engine written in Rust. It numerically integrates null geodesics (photon paths) through the Schwarzschild metric and renders the result using Unicode half-block pixels with 24-bit RGB colors in the terminal.
 
 ## System Architecture
 
@@ -60,6 +60,7 @@ graph TD
 - Celestial background: procedural checkerboard on a sphere with scattered stars
 - Accretion disk: temperature-based gradient (white-hot → orange → deep red)
 - Spiral texture on disk for visual richness
+- Both functions return `Color` directly (renderer uses half-block pixel rendering)
 - Color utility functions (lerp, brighten)
 
 ### `tui/app.rs` — Application State
@@ -76,7 +77,7 @@ graph TD
 - Physical constants in natural units (G = c = M = 1)
 - Raymarcher tuning parameters (step sizes, integration limits)
 - Camera defaults and input sensitivity
-- Color palette and luminance characters
+- Color palette (RGB style tokens for disk, grid, HUD, photon ring)
 
 ## Data Flow (Per Frame)
 
