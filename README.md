@@ -11,8 +11,12 @@ Light doesn't travel straight near a black hole. This engine traces every ray ba
 
 All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit RGB colors for double vertical resolution, and parallelized across all CPU cores with [rayon](https://github.com/rayon-rs/rayon) for real-time frame rates.
 
-See demo here:
-[](https://raw.githubusercontent.com/ck90works/schwarzschild-raytracer-tui-public/refs/heads/ck90works-patch-1/demo/demo.gif)
+---
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ck90works/schwarzschild-raytracer-tui-public/refs/heads/main/demo/demo.gif">
+</div>
+
 ---
 
 ## Features
