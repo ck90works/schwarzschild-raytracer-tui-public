@@ -11,6 +11,8 @@ Light doesn't travel straight near a black hole. This engine traces every ray ba
 
 All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit RGB colors for double vertical resolution, and parallelized across all CPU cores with [rayon](https://github.com/rayon-rs/rayon) for real-time frame rates.
 
+See demo here:
+()[demo/demo.gif]
 ---
 
 ## Features
@@ -27,7 +29,7 @@ All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit 
 
 ## Prerequisites
 
-- **Rust** ≥ 1.85.0 (Edition 2024)
+- **Rust** ≥ 1.85.0 (Edition 2024) (I used Rust 1.93.1 to compile this project)
 - A terminal emulator with **true-color (24-bit RGB)** support
   - Windows Terminal, iTerm2, Alacritty, kitty, WezTerm, etc.
   - The classic `cmd.exe` does **not** support true color
@@ -134,11 +136,7 @@ The engine traces light rays backward from the camera by integrating the **null 
 | Metric | Count |
 |---|---|
 | **Functional code** | ~583 lines |
-| Comment lines | ~575 lines |
 | Test code | ~304 lines |
-| **Total** | **~1,654 lines** across 14 files |
-| Test count | 18 tests |
-
 
 ---
 
