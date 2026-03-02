@@ -21,7 +21,7 @@ All of this is rendered using **Unicode half-block pixels** (`▀`) with 24-bit 
 
 ## Features
 
-- **Physically accurate** — Exact Schwarzschild geodesic integration in spherical coordinates, not flat-space approximations
+- **Visually accurate** — Visually accurate Schwarzschild geodesic integration in spherical coordinates
 - **Real-time rendering** — Targets 60 FPS on modern multi-core CPUs
 - **Zero-allocation hot path** — The ray integration loop performs no heap allocations
 - **Adaptive step sizing** — Small steps near the event horizon for precision, large steps in flat spacetime for speed
